@@ -7,16 +7,15 @@
  * (at your option) any later version.
  * 
  * @package     MineRCON
- * @copyright   2019 Podvirnyy Nikita (KRypt0n_)
+ * @copyright   2019 - 2020 Podvirnyy Nikita (Observer KRypt0n_)
  * @license     GNU GPLv3 <https://www.gnu.org/licenses/gpl-3.0.html>
- * @license     Enfesto Studio Group license <https://vk.com/topic-113350174_36400959>
- * @author      Podvirnyy Nikita (KRypt0n_)
+ * @author      Podvirnyy Nikita (Observer KRypt0n_)
  * 
  * Contacts:
  *
  * Email: <suimin.tu.mu.ga.mi@gmail.com>
- * VK:    vk.com/technomindlp
- *        vk.com/hphp_convertation
+ * VK:    <https://vk.com/technomindlp>
+ *        <https://vk.com/hphp_convertation>
  * 
  */
 
@@ -24,8 +23,8 @@ namespace MineRCON;
 
 class RCON
 {
-    protected string $ip       = '127.0.0.1';
-    protected int $port        = 25575;
+    protected string $ip = '127.0.0.1';
+    protected int $port = 25575;
     protected string $password = '';
 
     protected $socket = null;
@@ -52,8 +51,19 @@ class RCON
 
         stream_set_timeout ($this->socket, 5, 0);
 
-        $this->write (5, 3, $this->password);
-        $response = $this->read ();
+        try
+        {
+            @$this->write (5, 3, $this->password);
+            $response = @$this->read ();
+
+            if (!is_array ($response))
+                throw new \Exception ('This isn\'t an RCON server');
+        }
+
+        catch (\Throwable $e)
+        {
+            throw new \Exception ('This isn\'t an RCON server');
+        }
 
         if ($response['type'] != 2 || $response['id'] != 5)
             throw new \Exception ('Authorization error');

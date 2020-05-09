@@ -1,4 +1,4 @@
-# MineRCON
+<h1 align="center">MineRCON</h1>
 
 **MineRCON** - PHP библиотека для работы с RCON серверов Minecraft
 
@@ -7,6 +7,8 @@
 ```
 php qero.phar i KRypt0nn/MineRCON
 ```
+
+[Что такое Qero?](https://github.com/KRypt0nn/Qero)
 
 ## Использование
 
